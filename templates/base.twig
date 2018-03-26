@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Default title{% endblock %}</title>
+        <link rel="/build/css/app.css">
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+        <script src="/build/js/app.js"></script>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>
