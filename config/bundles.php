@@ -14,5 +14,6 @@ return [
     Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true, 'test' => true],
     Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
     Symfony\Bundle\WebServerBundle\WebServerBundle::class => ['dev' => true],
-    App\Bundles\AppBundle\AppBundle::class => ['all' => true],
+    App\Bundles\Frontend\AppFrontendBundle::class => ['all' => true],
+    App\Bundles\Backend\AppBackendBundle::class => ['all' => true],
 ];
