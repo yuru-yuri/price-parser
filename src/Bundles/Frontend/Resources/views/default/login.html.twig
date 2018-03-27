@@ -1,4 +1,4 @@
-{% extends "Backend.twig" %}
+{% extends "frontend.html.twig" %}
 
 {% block title %}Login{% endblock %}
 {% block body %}
@@ -7,6 +7,7 @@
 {% endif %}
 
 <form action="{{ path('login') }}" method="post">
+
     <label for="username">Username:</label>
     <input type="text" id="username" name="_username" value="{{ last_username }}" />
 
@@ -18,6 +19,9 @@
         is redirected to on success (more details below)
         <input type="hidden" name="_target_path" value="/account" />
     #}
+
+    <input type="checkbox" id="remember_me" name="_remember_me" checked />
+    <label for="remember_me">Keep me logged in</label>
 
     <button type="submit">login</button>
 </form>

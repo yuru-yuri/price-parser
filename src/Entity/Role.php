@@ -26,11 +26,6 @@ class Role implements RoleHierarchyInterface
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="roles")
-     */
-    private $users;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     private $created_at;
@@ -72,26 +67,6 @@ class Role implements RoleHierarchyInterface
         return $this->users;
     }
 
-    public function addUser(User $user): self
-    {
-        if (!$this->users->contains($user)) {
-            $this->users[] = $user;
-            $user->addRole($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(User $user): self
-    {
-        if ($this->users->contains($user)) {
-            $this->users->removeElement($user);
-            $user->removeRole($this);
-        }
-
-        return $this;
-    }
-
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->created_at;
@@ -114,11 +89,6 @@ class Role implements RoleHierarchyInterface
         $this->updated_at = $updated_at;
 
         return $this;
-    }
-
-    public function getRole()
-    {
-        return $this->getName();
     }
 
     /**

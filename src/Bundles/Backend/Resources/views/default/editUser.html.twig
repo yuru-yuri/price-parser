@@ -1,0 +1,20 @@
+{% extends 'backend.html.twig' %}
+
+{% block title %}Edit user{% endblock %}
+
+{% block body %}
+
+    <div>
+
+        <h2>{{ user.name }}</h2>
+
+        <div>
+            {#{{ form(form) }}#}
+            {{ form_start(form) }}
+                <button type="submit">Send</button>
+            {{ form_end(form) }}
+        </div>
+
+    </div>
+
+{% endblock %}

@@ -7,3 +7,6 @@ appFrontend:
 appBackend:
     resource: "@AppBackendBundle/Resources/config/routes.yaml"
 
+logout:
+   path: /logout
+

@@ -68,13 +68,14 @@ class User implements \Serializable, UserInterface
     private $active;
 
     /**
-     * @Assert\NotBlank()
      * @Assert\Length(max=4096)
      */
     private $plainPassword;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Role", inversedBy="users")
+     * @var array
+     *
+     * @ORM\Column(type="json_array", nullable=true)
      */
     private $roles;
 
@@ -207,11 +208,18 @@ class User implements \Serializable, UserInterface
     }
 
     /**
-     * @return Collection|Product[]
+     * @return array (Role|string)[]
      */
-    public function getRoles(): Collection
+    public function getRoles()
     {
-        return $this->roles;
+        $tmpRoles = $this->roles;
+
+        if (in_array('ROLE_USER', $tmpRoles) === false)
+        {
+            $tmpRoles[] = 'ROLE_USER';
+        }
+
+        return $tmpRoles;
     }
 
     public function eraseCredentials()
@@ -247,15 +255,6 @@ class User implements \Serializable, UserInterface
         return $this->login;
     }
 
-    public function addRole(Role $role): self
-    {
-        if (!$this->roles->contains($role)) {
-            $this->roles[] = $role;
-        }
-
-        return $this;
-    }
-
     public function removeRole(Role $role): self
     {
         if ($this->roles->contains($role)) {
@@ -263,6 +262,11 @@ class User implements \Serializable, UserInterface
         }
 
         return $this;
+    }
+
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
     }
 
 }

@@ -21,7 +21,7 @@ class DefaultController extends Controller
      */
     public function index()
     {
-        return $this->render('@AppFrontend/default/index.twig');
+        return $this->render('@AppFrontend/default/index.html.twig');
     }
 
     /**
@@ -31,7 +31,7 @@ class DefaultController extends Controller
      */
     public function shop($id)
     {
-        return $this->render('@AppFrontend/default/shop.twig', ['id' => $id]);
+        return $this->render('@AppFrontend/default/shop.html.twig', ['id' => $id]);
     }
 
     /**
@@ -45,7 +45,7 @@ class DefaultController extends Controller
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('@AppFrontend/default/login.twig', [
+        return $this->render('@AppFrontend/default/login.html.twig', [
             'last_username' => $lastUsername,
             'error'         => $error,
         ]);
@@ -79,7 +79,7 @@ class DefaultController extends Controller
             return $this->redirectToRoute('index');
         }
 
-        return $this->render('@AppFrontend/default/register.twig', ['form' => $form->createView()]);
+        return $this->render('@AppFrontend/default/register.html.twig', ['form' => $form->createView()]);
     }
 
 }
