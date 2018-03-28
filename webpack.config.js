@@ -14,6 +14,9 @@ Encore
     .addEntry('js/app', './assets/js/app.js')
     .addStyleEntry('css/app', './assets/css/app.scss')
 
+    .addEntry('js/backend', './assets/js/backend.js')
+    .addStyleEntry('css/backend', './assets/css/backend.scss')
+
     // uncomment if you use Sass/SCSS files
     .enableSassLoader()
 

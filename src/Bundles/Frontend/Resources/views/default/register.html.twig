@@ -1,8 +1,42 @@
 {% extends "frontend.html.twig" %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Registration{% endblock %}
 {% block body %}
-{{ form_start(form) }}
-    <button type="submit">Register!</button>
-{{ form_end(form) }}
+    <div id="main-wrapper">
+        <div class="unix-login">
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-lg-4">
+                        <div class="login-content card">
+                            <div class="login-form">
+                                <h4 style="margin-bottom: 20px;">Registration</h4>
+                                {{ form_start(form) }}
+                                    <div class="form-group">
+                                        {{ form_row(form.login) }}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form_row(form.email) }}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form_row(form.plainPassword.first) }}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form_row(form.plainPassword.second) }}
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-flat m-b-30 m-t-30">Sign Up</button>
+                                    <div class="register-link m-t-15 text-center">
+                                        <p>Have account? <a href="{{ path('login') }}"> Sign In Here</a></p>
+                                    </div>
+                                {{ form_end(form) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="/assets/css/helper.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
 {% endblock %}

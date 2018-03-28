@@ -3,7 +3,7 @@
 namespace App\Bundles\Frontend\Controller;
 
 
-use App\Bundles\Frontend\Form\UserType;
+use App\Bundles\Frontend\Form\UserRegistration;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -52,13 +52,13 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/register", name="user_registration")
+     * @Route("/registration", name="registration")
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
         // 1) build the form
         $user = new User();
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserRegistration::class, $user);
 
         // 2) handle the submit (will only happen on POST)
         $form->handleRequest($request);

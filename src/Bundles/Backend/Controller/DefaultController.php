@@ -23,39 +23,39 @@ class DefaultController extends Controller
      *
      * @Route("/", name="index_backend", methods="get")
      */
-    public function index()
+    public function index(): Response
     {
         return $this->render('@AppBackend/default/index.html.twig');
     }
 
     /**
-     * Matches /dashboard
+     * Matches /users
      *
-     * @Route("/dashboard", name="dashboard_backend", methods="get")
+     * @Route("/users", name="dashboard_backend", methods="get")
      */
-    public function dashboard()
+    public function dashboard(): Response
     {
         $em = $this->getDoctrine()->getManager();
 
         $users = $em->getRepository(User::class)->findAll();
 
-        return $this->render('@AppBackend/default/dashboard.html.twig', [
+        return $this->render('@AppBackend/default/users.html.twig', [
             'users' => $users
         ]);
     }
 
     /**
-     * Matches /dashboard
+     * Matches /users
      *
      * @param Request $request
      * @param User $user
      *
-     * @Route("/dashboard/editUser/{id}", name="editUser_backend")
+     * @Route("/users/edit/{id}", name="editUser_backend")
      * @ParamConverter("user", class="App\Entity\User")
      *
      * @return Response
      */
-    public function editUser(Request $request, User $user)
+    public function editUser(Request $request, User $user): Response
     {
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(UserType::class, $user);
