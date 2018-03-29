@@ -31,7 +31,7 @@ class DefaultController extends Controller
     /**
      * Matches /users
      *
-     * @Route("/users", name="dashboard_backend", methods="get")
+     * @Route("/users", name="users_backend", methods="get")
      */
     public function dashboard(): Response
     {
