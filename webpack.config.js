@@ -39,11 +39,11 @@ module.exports = Encore.getWebpackConfig();
 //         jQuery: "jquery",
 //     })
 // );
-module.exports.plugins.push(
-    new webpack.optimize.UglifyJsPlugin({
-        minimize: true,
-        compress: {
-            warnings: false
-        }
-    })
-);
+// module.exports.plugins.push(
+//     new webpack.optimize.UglifyJsPlugin({
+//         minimize: true,
+//         compress: {
+//             warnings: false
+//         }
+//     })
+// );
