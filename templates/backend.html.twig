@@ -7,8 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
 
     <title>{% block title %}Default title{% endblock %}</title>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
@@ -20,8 +18,10 @@
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,600,700,300italic,400italic,600italic">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon/favicon-96x96.png">
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="skin-blue sidebar-mini sidebar-collapse">
 <div class="wrapper">
     <section id="app">
         {% include 'backend/header.html.twig' %}
@@ -31,7 +31,7 @@
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             <section class="content-header">
-                <h1>Dashboard</h1>
+                <h1>{% if h1 is defined %}{{ h1 }}{% else %}Dashboard{% endif %}</h1>
                 {#<ol class="breadcrumb">
                     <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
                     <li class="active">Dashboard</li>

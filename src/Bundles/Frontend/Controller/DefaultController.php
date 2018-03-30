@@ -15,8 +15,6 @@ class DefaultController extends Controller
 {
 
     /**
-     * Matches /
-     *
      * @Route("/", name="index", methods="get")
      */
     public function index()
@@ -25,8 +23,6 @@ class DefaultController extends Controller
     }
 
     /**
-     * Matches /shop/{id}
-     *
      * @Route("/shop/{id}", name="shop", methods="get", requirements={"id"="\d+"})
      */
     public function shop($id)

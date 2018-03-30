@@ -9,6 +9,10 @@
         <h2>{{ user.name }}</h2>
 
         <div>
+            <a href="{{ path('users_backend') }}">Users</a>
+        </div>
+
+        <div>
             {#{{ form(form) }}#}
             {{ form_start(form) }}
                 <button type="submit">Send</button>

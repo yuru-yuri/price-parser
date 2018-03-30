@@ -49,6 +49,11 @@ class Store
      */
     private $products;
 
+    /**
+     * @ORM\Column(type="string", length=511, nullable=true)
+     */
+    private $class;
+
     public function __construct()
     {
         $this->active = true;
@@ -149,6 +154,18 @@ class Store
                 $product->setStore(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getClass(): ?string
+    {
+        return $this->class;
+    }
+
+    public function setClass(string $class): self
+    {
+        $this->class = $class;
 
         return $this;
     }

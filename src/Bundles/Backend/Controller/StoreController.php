@@ -4,9 +4,7 @@ namespace App\Bundles\Backend\Controller;
 
 
 use App\Bundles\Backend\Form\UserType;
-use App\Entity\Store;
 use App\Entity\User;
-use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,25 +13,25 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 /**
- * @Route("/admin")
+ * @Route("/admin/store")
  */
-class DefaultController extends Controller
+class StoreController extends Controller
 {
 
     /**
-     * Matches /
-     *
-     * @Route("/", name="index_backend", methods="get")
+     * @Route("/", name="store_backend", methods="get")
      */
     public function index(): Response
     {
-        $em = $this->getDoctrine()->getManager();
+        return $this->render('@AppBackend/store/index.html.twig');
+    }
 
-        $data = [
-            'stores' => $em->getRepository(Store::class)->findBy(['active' => '1']),
-        ];
-
-        return $this->render('@AppBackend/default/index.html.twig', $data);
+    /**
+     * @Route("/statistic", name="store_statistic_backend", methods="get")
+     */
+    public function statistic(): Response
+    {
+        return $this->render('@AppBackend/store/statistic.html.twig');
     }
 
 }

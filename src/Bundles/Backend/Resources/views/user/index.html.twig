@@ -1,12 +1,12 @@
 {% extends 'backend.html.twig' %}
 
-{% block title %}Dashboard{% endblock %}
+{% block title %}Users{% endblock %}
 {% block body %}
 
     <ul>
         {% for user in users %}
             <li>
-                <a href="{{ path('editUser_backend', {id: user.id}) }}">
+                <a href="{{ path('user_edit_backend', {id: user.id}) }}">
                    {{ user.login }}
                 </a>
             </li>

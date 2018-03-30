@@ -3,6 +3,7 @@
 namespace App\Command;
 
 
+use App\Entity\Store;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -28,5 +29,10 @@ class ParseCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('Task started');
+        // TODO
+//        $em = $this->
+//
+//        $tasks = Store
+
     }
 }
