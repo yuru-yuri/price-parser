@@ -19,7 +19,6 @@
         "build": "encore production"
     },
     "dependencies": {
-        "chart.js": "*",
         "admin-lte": "^2.4.3"
     }
 }
