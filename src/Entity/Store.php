@@ -91,7 +91,7 @@ class Store
         return $this;
     }
 
-    public function getActive(): ?int
+    public function getActive(): ?bool
     {
         return $this->active;
     }

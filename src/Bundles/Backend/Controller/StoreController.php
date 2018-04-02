@@ -3,7 +3,9 @@
 namespace App\Bundles\Backend\Controller;
 
 
+use App\Bundles\Backend\Form\StoreType;
 use App\Bundles\Backend\Form\UserType;
+use App\Entity\Store;
 use App\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -32,6 +34,42 @@ class StoreController extends Controller
     public function statistic(): Response
     {
         return $this->render('@AppBackend/store/statistic.html.twig');
+    }
+
+    /**
+     * @param Request $request
+     * @param Store $store
+     *
+     * @return Response
+     *
+     * @Route("/{title}-{id}", name="store_edit_backend")
+     * @ParamConverter("store", class="App\Entity\Store")
+     */
+    public function edit(Request $request, Store $store): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->createForm(StoreType::class, $store);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted())
+        {
+            $em->persist($store);
+            $em->flush();
+        }
+
+        return $this->render('@AppBackend/store/edit.html.twig', ['form' => $form->createView()]);
+    }
+
+    /**
+     * @param $request Request
+     *
+     * @return Response
+     *
+     * @Route("/new", name="store_create_backend")
+     */
+    public function create(Request $request): Response
+    {
+        return $this->edit($request, new Store());
     }
 
 }

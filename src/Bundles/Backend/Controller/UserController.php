@@ -36,7 +36,7 @@ class UserController extends Controller
      * @param Request $request
      * @param User $user
      *
-     * @Route("/{id}/edit", name="user_edit_backend")
+     * @Route("/{login}-{id}/edit", name="user_edit_backend")
      * @ParamConverter("user", class="App\Entity\User")
      *
      * @return Response
@@ -63,7 +63,7 @@ class UserController extends Controller
      * @param Request $request
      * @param User $user
      *
-     * @Route("/{id}", name="user_view_backend")
+     * @Route("/{login}-{id}", name="user_view_backend")
      * @ParamConverter("user", class="App\Entity\User")
      *
      * @return Response
@@ -80,7 +80,7 @@ class UserController extends Controller
             $em->flush();
         }
 
-        return $this->render('@AppBackend/user/edit.html.twig', [
+        return $this->render('@AppBackend/user/view.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
         ]);

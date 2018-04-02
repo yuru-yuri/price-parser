@@ -2,3 +2,7 @@ Login: Login
 Email: Email
 Password: Password
 Repeat Password: Repeat Password
+Roles: Roles
+Creator: Creator
+Moderator: Moderator
+Admin: Admin
