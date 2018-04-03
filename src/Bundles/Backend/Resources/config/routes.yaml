@@ -1,3 +1,4 @@
 controllers:
     resource: "@AppBackendBundle/Controller"
     type: annotation
+    prefix: /admin
