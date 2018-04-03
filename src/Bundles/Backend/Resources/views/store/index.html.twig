@@ -2,7 +2,13 @@
 
 {% block title %}Store index{% endblock %}
 {% block body %}
-
-    Store index
-
+    <ul class="row">
+        {% for store in stores %}
+            <li>
+                <a href="{{ path('store_edit_backend',
+                    {id: store.id, title: store.title}
+                ) }}">{{ store.title }}</a>
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock %}

@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -14,6 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(fields="email", message="Email already taken")
  * @UniqueEntity(fields="login", message="Username already taken")
+ * @ORM\HasLifecycleCallbacks
  */
 class User implements \Serializable, UserInterface
 {
@@ -37,6 +37,7 @@ class User implements \Serializable, UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
+     * @Assert\Regex("~^[^/]+$~")
      */
     private $login;
 
@@ -200,13 +201,6 @@ class User implements \Serializable, UserInterface
         return $this;
     }
 
-    public function getSalt()
-    {
-        // you *may* need a real salt depending on your encoder
-        // see section on salt below
-        return null;
-    }
-
     /**
      * @return array (Role|string)[]
      */
@@ -214,12 +208,24 @@ class User implements \Serializable, UserInterface
     {
         $tmpRoles = $this->roles;
 
-        if (in_array('ROLE_USER', $tmpRoles) === false)
+        if (\in_array('ROLE_USER', $tmpRoles, 1) === false)
         {
             $tmpRoles[] = 'ROLE_USER';
         }
 
         return $tmpRoles;
+    }
+
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+    }
+
+    public function getSalt()
+    {
+        // you *may* need a real salt depending on your encoder
+        // see section on salt below
+        return null;
     }
 
     public function eraseCredentials()
@@ -255,18 +261,13 @@ class User implements \Serializable, UserInterface
         return $this->login;
     }
 
-    public function removeRole(Role $role): self
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function updateTimestamp()
     {
-        if ($this->roles->contains($role)) {
-            $this->roles->removeElement($role);
-        }
-
-        return $this;
-    }
-
-    public function setRoles($roles)
-    {
-        $this->roles = $roles;
+        $this->setUpdatedAt(new \DateTime('NOW'));
     }
 
 }

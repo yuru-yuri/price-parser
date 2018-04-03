@@ -1,6 +1,18 @@
 
-.form-group {
+.checkboxes-form {
   .m-left-5 {
     margin-left: 5px;
+  }
+  .form-control {
+    height: auto;
+    min-height: 34px;
+    input {
+      position: absolute;
+      z-index: 1;
+      & + label {
+        display: block;
+        padding-left: 1.3em;
+      }
+    }
   }
 }

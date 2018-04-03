@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Table(name="prices")
  * @ORM\Entity(repositoryClass="App\Repository\PriceRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Price
 {
@@ -95,4 +96,14 @@ class Price
 
         return $this;
     }
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function updateTimestamp()
+    {
+        $this->setUpdatedAt(new \DateTime('NOW'));
+    }
+
 }

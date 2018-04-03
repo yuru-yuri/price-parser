@@ -10,7 +10,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 /**
  * @Route("/admin/user")
@@ -47,7 +46,7 @@ class UserController extends Controller
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted())
+        if ($form->isSubmitted() && $form->isValid())
         {
             $em->persist($user);
             $em->flush();
@@ -56,6 +55,7 @@ class UserController extends Controller
         return $this->render('@AppBackend/user/edit.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
+            'h1' => 'Edit user',
         ]);
     }
 
@@ -70,19 +70,9 @@ class UserController extends Controller
      */
     public function view(Request $request, User $user): Response
     {
-        $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted())
-        {
-            $em->persist($user);
-            $em->flush();
-        }
-
         return $this->render('@AppBackend/user/view.html.twig', [
             'user' => $user,
-            'form' => $form->createView(),
+            'h1' => 'View user',
         ]);
     }
 

@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Table(name="products")
  * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Product
 {
@@ -19,6 +20,7 @@ class Product
      */
     private $id;
 
+    // * @Assert\Regex("~^[^/]+$~")
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -63,7 +65,8 @@ class Product
 
     public function setTitle(string $title): self
     {
-        $this->title = $title;
+        // replace slash to &#8725;
+        $this->title = str_replace('/', '∕', $title);
 
         return $this;
     }
@@ -133,6 +136,15 @@ class Product
         }
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function updateTimestamp()
+    {
+        $this->setUpdatedAt(new \DateTime('NOW'));
     }
 
 }

@@ -19,8 +19,14 @@ class StoreType extends AbstractType
                 ],
             ])
             ->add('active', CheckboxType::class, [
+                'required' => false,
                 'attr' => [
                     'class' => 'm-left-5',
+                ],
+            ])
+            ->add('class', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control',
                 ],
             ])
         ;
