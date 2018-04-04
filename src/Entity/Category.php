@@ -7,11 +7,11 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="products")
- * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
+ * @ORM\Table(name="categories")
+ * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Product
+class Category
 {
     /**
      * @ORM\Id()
@@ -20,26 +20,10 @@ class Product
      */
     private $id;
 
-    // * @Assert\Regex("~^[^/]+$~")
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $title;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $updated_at;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $created_at;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Price", mappedBy="product")
-     */
-    private $prices;
 
     /**
      * @ORM\Column(type="string", length=511)
@@ -47,21 +31,36 @@ class Product
     private $url;
 
     /**
+     * @ORM\Column(type="datetime")
+     */
+    private $created_at;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $updated_at;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Store", inversedBy="categories")
+     */
+    private $store;
+
+    /**
      * @ORM\Column(type="boolean")
      */
     private $active;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="products")
+     * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="category")
      */
-    private $category;
+    private $products;
 
     public function __construct()
     {
         $this->created_at = new \DateTime('NOW');
         $this->updated_at = new \DateTime('NOW');
-        $this->prices = new ArrayCollection();
         $this->active = true;
+        $this->products = new ArrayCollection();
     }
 
     public function getId()
@@ -76,20 +75,19 @@ class Product
 
     public function setTitle(string $title): self
     {
-        // replace slash to &#8725;
-        $this->title = str_replace('/', '∕', $title);
+        $this->title = $title;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
+    public function getUrl(): ?string
     {
-        return $this->updated_at;
+        return $this->url;
     }
 
-    public function setUpdatedAt(\DateTimeInterface $updated_at): self
+    public function setUrl(string $url): self
     {
-        $this->updated_at = $updated_at;
+        $this->url = $url;
 
         return $this;
     }
@@ -106,33 +104,14 @@ class Product
         return $this;
     }
 
-    /**
-     * @return Collection|Price[]
-     */
-    public function getPrices(): Collection
+    public function getUpdatedAt(): ?\DateTimeInterface
     {
-        return $this->prices;
+        return $this->updated_at;
     }
 
-    public function addPrice(Price $price): self
+    public function setUpdatedAt(\DateTimeInterface $updated_at): self
     {
-        if (!$this->prices->contains($price)) {
-            $this->prices[] = $price;
-            $price->setProduct($this);
-        }
-
-        return $this;
-    }
-
-    public function removePrice(Price $price): self
-    {
-        if ($this->prices->contains($price)) {
-            $this->prices->removeElement($price);
-            // set the owning side to null (unless already changed)
-            if ($price->getProduct() === $this) {
-                $price->setProduct(null);
-            }
-        }
+        $this->updated_at = $updated_at;
 
         return $this;
     }
@@ -146,14 +125,14 @@ class Product
         $this->setUpdatedAt(new \DateTime('NOW'));
     }
 
-    public function getUrl(): ?string
+    public function getStore(): ?Store
     {
-        return $this->url;
+        return $this->store;
     }
 
-    public function setUrl(?string $url): self
+    public function setStore(?Store $store): self
     {
-        $this->url = $url;
+        $this->store = $store;
 
         return $this;
     }
@@ -170,14 +149,33 @@ class Product
         return $this;
     }
 
-    public function getCategory(): ?Category
+    /**
+     * @return Collection|Product[]
+     */
+    public function getProducts(): Collection
     {
-        return $this->category;
+        return $this->products;
     }
 
-    public function setCategory(?Category $category): self
+    public function addProduct(Product $product): self
     {
-        $this->category = $category;
+        if (!$this->products->contains($product)) {
+            $this->products[] = $product;
+            $product->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Product $product): self
+    {
+        if ($this->products->contains($product)) {
+            $this->products->removeElement($product);
+            // set the owning side to null (unless already changed)
+            if ($product->getCategory() === $this) {
+                $product->setCategory(null);
+            }
+        }
 
         return $this;
     }

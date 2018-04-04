@@ -1,0 +1,14 @@
+{% extends 'backend.html.twig' %}
+
+{% block title %}Categories index{% endblock %}
+{% block body %}
+    <ul class="row">
+        {% for category in categories %}
+            <li>
+                <a href="{{ path('category_edit_backend',
+                    {id: category.id, title: category.title}
+                ) }}">{{ category.title }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

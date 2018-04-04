@@ -1,5 +1,6 @@
 <?php
-namespace App\Bundles\Frontend\Form;
+
+namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
@@ -7,10 +8,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
-class UserRegistration extends AbstractType
+class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -25,22 +24,8 @@ class UserRegistration extends AbstractType
                     'class' => 'form-control',
                 ],
             ])
-            ->add('plainPassword', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'required' => true,
-                'first_options'  => [
-                    'label' => 'Password',
-                    'attr' => [
-                        'class' => 'form-control',
-                    ],
-                ],
-                'second_options' => [
-                    'label' => 'Repeat Password',
-                    'attr' => [
-                        'class' => 'form-control',
-                    ],
-                ],
-            ])
+            ->add('name', TextType::class)
+            ->add('last_name', TextType::class)
         ;
     }
 

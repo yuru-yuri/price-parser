@@ -48,21 +48,21 @@ class Store
     private $created_at;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="store")
-     */
-    private $products;
-
-    /**
      * @ORM\Column(type="string", length=511, nullable=true)
      */
     private $class;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Category", mappedBy="store")
+     */
+    private $categories;
 
     public function __construct()
     {
         $this->active = true;
         $this->created_at = new \DateTime('NOW');
         $this->updated_at = new \DateTime('NOW');
-        $this->products = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     public function getId()
@@ -130,37 +130,6 @@ class Store
         return $this;
     }
 
-    /**
-     * @return Collection|Product[]
-     */
-    public function getProducts(): Collection
-    {
-        return $this->products;
-    }
-
-    public function addProduct(Product $product): self
-    {
-        if (!$this->products->contains($product)) {
-            $this->products[] = $product;
-            $product->setStore($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProduct(Product $product): self
-    {
-        if ($this->products->contains($product)) {
-            $this->products->removeElement($product);
-            // set the owning side to null (unless already changed)
-            if ($product->getStore() === $this) {
-                $product->setStore(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getClass(): ?string
     {
         return $this->class;
@@ -180,6 +149,42 @@ class Store
     public function updateTimestamp()
     {
         $this->setUpdatedAt(new \DateTime('NOW'));
+    }
+
+    /**
+     * @return Collection|Category[]
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
+            $category->setStore($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        if ($this->categories->contains($category)) {
+            $this->categories->removeElement($category);
+            // set the owning side to null (unless already changed)
+            if ($category->getStore() === $this) {
+                $category->setStore(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return (string)$this->getTitle();
     }
 
 }

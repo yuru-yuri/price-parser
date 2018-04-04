@@ -5,3 +5,16 @@ body {
   background: #fff;
   font-family: 'Roboto', sans-serif;
 }
+
+.info-box:hover {
+  color: #333;
+}
+.info-box-footer {
+  position: relative;
+  bottom: -14px;
+  display: block;
+  background: rgba(0,20,0,0.1);
+  margin-left: 90px;
+  padding-left: 10px;
+  line-height: 20px;
+}

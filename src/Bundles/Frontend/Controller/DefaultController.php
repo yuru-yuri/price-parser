@@ -3,15 +3,16 @@
 namespace App\Bundles\Frontend\Controller;
 
 
-use App\Bundles\Frontend\Form\UserRegistration;
 use App\Entity\User;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use App\Form\UserType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-class DefaultController extends Controller
+class DefaultController extends BaseController
 {
 
     /**
@@ -31,7 +32,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/login", name="login")
+     * @Route("/login/", name="login")
      */
     public function login(Request $request, AuthenticationUtils $authenticationUtils)
     {
@@ -48,13 +49,31 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/registration", name="registration")
+     * @Route("/registration/", name="registration")
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
         // 1) build the form
         $user = new User();
-        $form = $this->createForm(UserRegistration::class, $user);
+        $form = $this->createForm(UserType::class, $user);
+        $form
+            ->add('plainPassword', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'required' => true,
+                'first_options'  => [
+                    'label' => 'Password',
+                    'attr' => [
+                        'class' => 'form-control',
+                    ],
+                ],
+                'second_options' => [
+                    'label' => 'Repeat Password',
+                    'attr' => [
+                        'class' => 'form-control',
+                    ],
+                ],
+            ])
+            ;
 
         // 2) handle the submit (will only happen on POST)
         $form->handleRequest($request);

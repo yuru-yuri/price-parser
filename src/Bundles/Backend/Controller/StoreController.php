@@ -3,10 +3,9 @@
 namespace App\Bundles\Backend\Controller;
 
 
-use App\Bundles\Backend\Form\StoreType;
+use App\Form\StoreType;
 use App\Entity\Store;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/store")
  */
-class StoreController extends Controller
+class StoreController extends BaseController
 {
 
     /**

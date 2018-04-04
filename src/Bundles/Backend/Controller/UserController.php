@@ -3,10 +3,11 @@
 namespace App\Bundles\Backend\Controller;
 
 
-use App\Bundles\Backend\Form\UserType;
+use App\Form\UserType;
 use App\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/user")
  */
-class UserController extends Controller
+class UserController extends BaseController
 {
 
     /**
@@ -44,6 +45,23 @@ class UserController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(UserType::class, $user);
+        $form
+            ->add('roles', ChoiceType::class, [
+                'multiple' => true,
+                'expanded' => true,
+                'choices' => [
+                    'Creator' => 'ROLE_CREATOR',
+                    'Moderator' => 'ROLE_MODERATOR',
+                    'Admin' => 'ROLE_ADMIN'
+                ],
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+            ])
+            ->add('avatar', FileType::class, [
+                'label' => 'Avatar',
+            ])
+        ;
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())

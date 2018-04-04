@@ -1,6 +1,6 @@
 {% extends 'backend.html.twig' %}
 
-{% block title %}{{ title }}{% endblock %}
+{% block title %}Edit category{% endblock %}
 
 {% block body %}
 
@@ -10,7 +10,7 @@
         {{ form_widget(form) }}
         <hr class="hr"/>
         <div class="form-group btn-group">
-            <a class="btn btn-default" href="{{ path('store_backend') }}">Back</a>
+            <a class="btn btn-default" href="{{ path('products_backend') }}">Back</a>
             <button type="submit" class="btn btn-success">Save</button>
         </div>
         {{ form_end(form) }}

@@ -1,5 +1,6 @@
 <?php
-namespace App\Bundles\Backend\Form;
+
+namespace App\Form;
 
 use App\Entity\Store;
 use Symfony\Component\Form\AbstractType;

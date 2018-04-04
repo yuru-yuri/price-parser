@@ -80,6 +80,13 @@ class User implements \Serializable, UserInterface
      */
     private $roles;
 
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     *
+     * @Assert\File(mimeTypes={ "image/jpeg", "image/png" }, maxSize=1024)
+     */
+    private $avatar;
+
     public function __construct()
     {
         $this->active = true;
@@ -268,6 +275,18 @@ class User implements \Serializable, UserInterface
     public function updateTimestamp()
     {
         $this->setUpdatedAt(new \DateTime('NOW'));
+    }
+
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(?string $avatar): self
+    {
+        $this->avatar = $avatar;
+
+        return $this;
     }
 
 }

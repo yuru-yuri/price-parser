@@ -1,0 +1,14 @@
+{% extends 'backend.html.twig' %}
+
+{% block title %}Products index{% endblock %}
+{% block body %}
+    <ul class="row">
+        {% for product in products %}
+            <li>
+                <a href="{{ path('product_edit_backend',
+                    {id: product.id, title: product.title}
+                ) }}">{{ product.title }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

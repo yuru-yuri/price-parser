@@ -1,39 +1,42 @@
 <?php
-namespace App\Bundles\Backend\Form;
 
-use App\Entity\User;
+namespace App\Form;
+
+use App\Entity\Category;
+use App\Entity\Store;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-class UserType extends AbstractType
+class CategoryType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email', EmailType::class, [
+            ->add('title', TextType::class, [
                 'attr' => [
                     'class' => 'form-control',
                 ],
             ])
-            ->add('login', TextType::class, [
+            ->add('url', TextType::class, [
                 'attr' => [
                     'class' => 'form-control',
                 ],
             ])
-            ->add('roles', ChoiceType::class, [
-                'multiple' => true,
-                'expanded' => true,
-                'choices' => [
-                    'Creator' => 'ROLE_CREATOR',
-                    'Moderator' => 'ROLE_MODERATOR',
-                    'Admin' => 'ROLE_ADMIN'
-                ],
+            ->add('store', EntityType::class, [
+                'class' => Store::class,
+                'choice_label' => 'title',
                 'attr' => [
                     'class' => 'form-control',
+                ],
+            ])
+            ->add('active', CheckboxType::class, [
+                'required' => false,
+                'attr' => [
+                    'class' => 'm-left-5',
                 ],
             ])
         ;
@@ -42,7 +45,7 @@ class UserType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => User::class,
+            'data_class' => Category::class,
         ));
     }
 }

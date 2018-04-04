@@ -6,14 +6,13 @@ namespace App\Bundles\Backend\Controller;
 use App\Entity\Product;
 use App\Entity\Store;
 use Doctrine\Common\Collections\Criteria;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/")
  */
-class DefaultController extends Controller
+class DefaultController extends BaseController
 {
 
     /**

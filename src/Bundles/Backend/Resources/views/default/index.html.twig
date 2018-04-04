@@ -1,4 +1,4 @@
-{% extends "backend.html.twig" %}
+{% extends 'backend.html.twig' %}
 
 {% block title %}Backend{% endblock %}
 {% block body %}
@@ -15,6 +15,10 @@
                     <span class="info-box-number">{{ stores }}</span>
                 </div>
                 <!-- /.info-box-content -->
+                <a class="info-box-footer" href="{{ path('store_backend') }}">
+                    More info <i class="fa fa-arrow-circle-right"></i>
+                </a>
+                <!-- /.info-box-footer -->
             </div>
             <!-- /.info-box -->
         </div>
@@ -28,6 +32,10 @@
                     <span class="info-box-number">0</span>
                 </div>
                 <!-- /.info-box-content -->
+                <a class="info-box-footer" href="{{ path('categories_backend') }}">
+                    More info <i class="fa fa-arrow-circle-right"></i>
+                </a>
+                <!-- /.info-box-footer -->
             </div>
             <!-- /.info-box -->
         </div>
@@ -41,6 +49,10 @@
                     <span class="info-box-number">{{ products }}</span>
                 </div>
                 <!-- /.info-box-content -->
+                <a class="info-box-footer" href="{{ path('store_backend') }}">
+                    More info <i class="fa fa-arrow-circle-right"></i>
+                </a>
+                <!-- /.info-box-footer -->
             </div>
             <!-- /.info-box -->
         </div>
@@ -58,6 +70,10 @@
                     <span class="info-box-number">{{ products_last_week }}</span>
                 </div>
                 <!-- /.info-box-content -->
+                <a class="info-box-footer" href="{{ path('store_backend') }}">
+                    More info <i class="fa fa-arrow-circle-right"></i>
+                </a>
+                <!-- /.info-box-footer -->
             </div>
             <!-- /.info-box -->
         </div>

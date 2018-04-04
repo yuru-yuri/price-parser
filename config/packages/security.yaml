@@ -7,9 +7,25 @@ security:
                 property: login
 
     firewalls:
-#        dev:
-#            pattern: ^/(_(profiler|wdt)|css|images|js)/
-#            security: false
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: true
+
+            form_login:
+                login_path: login
+                check_path: login
+                default_target_path: index
+            provider: our_db_provider
+
+            logout:
+                path:   /logout
+                target: /
+
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 3600 # 1 hour in seconds
+                path: /
+
         main:
             anonymous: ~
             pattern:    ^/
@@ -17,7 +33,25 @@ security:
                 login_path: login
                 check_path: login
                 default_target_path: index
-#                csrf_provider: form.csrf_provider
+            provider: our_db_provider
+
+            logout:
+                path:   /logout
+                target: /
+
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 2678400 # 1 month in seconds
+                path: /
+
+        admin:
+            pattern: ^/admin/
+            security: true
+
+            form_login:
+                login_path: login
+                check_path: login
+                default_target_path: index
             provider: our_db_provider
 
             logout:
@@ -29,12 +63,6 @@ security:
                 lifetime: 604800 # 1 week in seconds
                 path: /
 
-#            remember_me:
-#                key: "%secret%"
-#                lifetime: 31536000 # 365 days in seconds
-#                path: ~
-#                domain: .%domain%
-
             # activate different ways to authenticate
 
             # http_basic: true
@@ -45,11 +73,15 @@ security:
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
+
     access_control:
-         - { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/admin/user, roles: ROLE_ADMIN }
+         - { path: ^/(_(profiler|wdt)|css|images|js)/, roles: ROLE_ADMIN }
+         - { path: ^/admin, roles: [ROLE_ADMIN, ROLE_CREATOR, ROLE_MODERATOR] }
          - { path: ^/_profiler, roles: ROLE_ADMIN }
          - { path: ^/profile, roles: ROLE_USER }
          - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+
     encoders:
         App\Entity\User:
             algorithm: bcrypt

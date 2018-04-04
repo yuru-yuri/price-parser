@@ -14,14 +14,14 @@ Encore
     // uncomment to define the assets of the project
     .addEntry('js/app', './assets/js/app.js')
     .addStyleEntry('css/app', [
-        './assets/css/app.scss',
         './assets/css/app.less',
+        './assets/css/app.scss',
     ])
 
     .addEntry('js/backend', './assets/js/backend.js')
     .addStyleEntry('css/backend', [
-        './assets/css/backend.scss',
         './assets/css/backend.less',
+        './assets/css/backend.scss',
     ])
 
     // uncomment if you use Sass/SCSS files
