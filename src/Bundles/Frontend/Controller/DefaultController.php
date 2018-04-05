@@ -2,7 +2,6 @@
 
 namespace App\Bundles\Frontend\Controller;
 
-
 use App\Entity\User;
 use App\Form\UserType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;

@@ -2,7 +2,6 @@
 
 namespace App\Command\Task;
 
-
 class Ulmart implements TaskInterface
 {
 

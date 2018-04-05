@@ -2,7 +2,6 @@
 
 namespace App\Command\Task;
 
-
 interface TaskInterface
 {
 

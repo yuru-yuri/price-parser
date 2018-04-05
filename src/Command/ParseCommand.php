@@ -2,7 +2,6 @@
 
 namespace App\Command;
 
-
 use App\Entity\Store;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -24,7 +23,6 @@ class ParseCommand extends Command
             ->setHelp('Start collecting prices from all stores');
 
     }
-
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {

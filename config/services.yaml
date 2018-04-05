@@ -3,6 +3,17 @@
 parameters:
     locale: 'en'
     images_directory: '%kernel.project_dir%/public/uploads/images'
+    images_web_root: '/uploads/images'
+    image_driver: 'gd'
+    image_sizes:
+        avatar:
+            width: 120
+            height: 120
+            type: crop
+        avatar1:
+            width: 120
+            height: 120
+            type: crop
 
 services:
     # default configuration for services in *this* file
@@ -29,4 +40,12 @@ services:
     # please note that last definitions always *replace* previous ones
 
     file.upload.service:
-        class: App\Model\File
+        class: App\Service\File
+        public: true
+        arguments:
+            $params:
+                targetDir: '%images_directory%'
+                driver: '%image_driver%'
+                imagesWebRoot: '%images_web_root%'
+            $manager: Intervention\Image\ImageManager
+

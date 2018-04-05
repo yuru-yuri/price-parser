@@ -2,8 +2,11 @@
 
 namespace App\Entity;
 
+use App\Service\File;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Intervention\Image\ImageManager;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -83,7 +86,7 @@ class User implements \Serializable, UserInterface
     /**
      * @ORM\Column(type="string", nullable=true)
      *
-     * @Assert\File(mimeTypes={ "image/jpeg", "image/png" }, maxSize=1024)
+     * @Assert\File(mimeTypes={ "image/jpeg", "image/png" }, maxSize="1M")
      */
     private $avatar;
 
@@ -277,16 +280,22 @@ class User implements \Serializable, UserInterface
         $this->setUpdatedAt(new \DateTime('NOW'));
     }
 
-    public function getAvatar(): ?string
+    public function getAvatar()
     {
         return $this->avatar;
     }
 
-    public function setAvatar(?string $avatar): self
+    public function setAvatar($avatar): self
     {
         $this->avatar = $avatar;
 
         return $this;
+    }
+
+    public function resize(string $path, ImageManager $im, array $params)
+    {
+        $file = new File();
+        return $file->imageResize($path, $im, $params);
     }
 
 }

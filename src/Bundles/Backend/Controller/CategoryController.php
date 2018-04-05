@@ -2,14 +2,12 @@
 
 namespace App\Bundles\Backend\Controller;
 
-
 use App\Form\CategoryType;
 use App\Entity\Category;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
 
 /**
  * @Route("/categories")

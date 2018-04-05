@@ -2,10 +2,10 @@
 
 namespace App\Bundles\Frontend\Controller;
 
-
 use App\Form\UserType;
 use App\Entity\User;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,9 +41,13 @@ class ProfileController extends BaseController
 
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(UserType::class, $user);
-        $form->add('avatar', FileType::class, [
-            'label' => 'Avatar',
-        ])
+        $form
+            ->add('avatar', FileType::class, [
+                'label' => 'Avatar',
+                'required' => false,
+                'data_class' => null,
+            ])
+            ->remove('login')
         ;
         $form->handleRequest($request);
 
@@ -51,11 +55,26 @@ class ProfileController extends BaseController
         {
             /** @var $avatar UploadedFile */
             $avatar = $user->getAvatar();
-            $uploadService = $this->get('file.upload.service');
-            $fileName = $uploadService->generateName();
+            if ($avatar)
+            {
+                $uploadService = $this->get('file.upload.service');
+                $directory = $this->getParameter('images_directory');
+                $extension = $avatar->guessExtension();
 
-            $avatar->move($this->getParameter('images_directory'), $fileName);
-            $user->setAvatar($fileName);
+                do
+                {
+                    $fileName = $uploadService->generateName() . '.' . $extension;
+                }
+                while (\is_file($directory . '/' . $fileName));
+
+                $fullName = $fileName;
+
+                $directory .= '.' . \dirname($fileName);
+                $fileName = \basename($fileName);
+
+                $avatar->move($directory, $fileName);
+                $user->setAvatar($fullName);
+            }
 
             $em->persist($user);
             $em->flush();

@@ -2,7 +2,6 @@
 
 namespace App\Bundles\Backend\Controller;
 
-
 use App\Form\UserType;
 use App\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
