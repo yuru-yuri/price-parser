@@ -60,10 +60,7 @@ class ProfileController extends BaseController
             if ($avatar)
             {
                 $uploadService = $this->get('file.upload.service');
-                $directory = $this->getParameter('images_directory');
-
-                $fullName = $uploadService->uploadFile($directory, $avatar);
-
+                $fullName = $uploadService->uploadFile($avatar);
                 $user->setAvatar($fullName);
             }
 

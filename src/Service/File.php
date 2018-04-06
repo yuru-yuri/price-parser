@@ -2,11 +2,21 @@
 
 namespace App\Service;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class File
 {
     protected const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_';
+    /**
+     * @var ContainerInterface
+     */
+    protected $container;
+
+    public function setContainer(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
 
     public function generateName(int $len = 8): string
     {
@@ -31,8 +41,9 @@ class File
         ]);
     }
 
-    public function uploadFile(string $rootPath, UploadedFile $file)
+    public function uploadFile(UploadedFile $file)
     {
+        $rootPath = $this->container->getParameter('images_directory');
         $extension = $file->guessExtension();
 
         do

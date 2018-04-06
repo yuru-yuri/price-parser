@@ -32,6 +32,8 @@ services:
     file.upload.service:
         class: App\Service\File
         public: true
+        calls:
+            - [setContainer, ["@service_container"]]
 
 #    app.repository.user:
 #        class: App\Repository\UserRepository
