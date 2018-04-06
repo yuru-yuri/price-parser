@@ -4,6 +4,7 @@ namespace App\Bundles\Backend\Controller;
 
 use App\Form\ProductType;
 use App\Entity\Product;
+use Doctrine\Common\Collections\Criteria;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,28 +18,41 @@ class ProductController extends BaseController
 
     /**
      * @Route("/", name="products_backend")
+     * @Route("/{page}", name="products_backend.paginate", requirements={"page"="\d+"})
+     *
+     * @param $request Request
+     * @param $page int|null
      *
      * @return Response
      */
-    public function index(): Response
+    public function index(Request $request, ?int $page = null): Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $maxProducts = 6;
+        $page = $page ?? 0;
 
-        $products = $em->getRepository(Product::class)->findBy(['active' => 1]);
+        $em = $this->getDoctrine()->getManager();
+        $criteria = Criteria::create();
+        $criteria->setFirstResult($maxProducts * $page)
+            ->setMaxResults($maxProducts);
+        $totalPages = 10;
+
+        $products = $em->getRepository(Product::class)
+            ->matching($criteria);
 
         return $this->render('@AppBackend/products/index.html.twig', [
             'h1' => 'Products index',
             'products' => $products,
+            'page' => $page,
+            'totalPages' => $totalPages,
         ]);
     }
 
     /**
+     * @Route("/{title}-{id}", name="product_edit_backend")
+     * @ParamConverter("product", class="App\Entity\Product")
+     *
      * @param $request Request
      * @param $product Product
-     *
-     * @Route("/{title}-{id}", name="product_edit_backend")
-     *
-     * @ParamConverter("store", class="App\Entity\Product")
      *
      * @return Response
      */

@@ -9,7 +9,7 @@
         {{ form_widget(form) }}
         <hr class="hr"/>
         <div><strong>Current image</strong></div>
-        <img src="{{ user.getAvatar() | imagine_filter('small') }}">
+        <img src="{{ profile.getAvatar() | imagine_filter('small') }}">
         <hr class="hr"/>
         <div class="form-group btn-group">
             <a class="btn btn-default" href="{{ path('users_backend') }}">Back</a>

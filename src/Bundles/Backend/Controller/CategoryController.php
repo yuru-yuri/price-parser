@@ -4,6 +4,7 @@ namespace App\Bundles\Backend\Controller;
 
 use App\Form\CategoryType;
 use App\Entity\Category;
+use Doctrine\Common\Collections\Criteria;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,28 +18,35 @@ class CategoryController extends BaseController
 
     /**
      * @Route("/", name="categories_backend")
+     * @Route("/{page}", name="categories_backend.paginate", requirements={"page"="\d+"})
      *
      * @return Response
      */
-    public function index(): Response
+    public function index(Request $request, ?int $page=null): Response
     {
+        $page = (int)$page;
         $em = $this->getDoctrine()->getManager();
+        $criteria = Criteria::create();
+        $criteria->setFirstResult(3)->setMaxResults(10);
+
+        $pagesCount = 0;
 
         $categories = $em->getRepository(Category::class)->findBy(['active' => 1]);
 
         return $this->render('@AppBackend/categories/index.html.twig', [
             'categories' => $categories,
             'h1' => 'Categories index',
+            'currentPage' => $page,
+            'lastPage' => $pagesCount,
         ]);
     }
 
     /**
+     * @Route("/{title}-{id}", name="category_edit_backend", requirements={"id"="\d+"})
+     * @ParamConverter("category", class="App\Entity\Category")
+     *
      * @param $request Request
      * @param $category Category
-     *
-     * @Route("/{title}-{id}", name="category_edit_backend")
-     *
-     * @ParamConverter("category", class="App\Entity\Category")
      *
      * @return Response
      */

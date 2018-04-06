@@ -13,8 +13,6 @@ class DefaultController extends BaseController
 {
 
     /**
-     * Matches /
-     *
      * @Route("/", name="index_backend", methods="get")
      */
     public function index(): Response

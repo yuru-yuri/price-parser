@@ -95,7 +95,7 @@ class UserController extends BaseController
      * @param Request $request
      * @param User $user
      *
-     * @Route("/{login}-{id}", name="user_view_backend")
+     * @Route("/{login}-{id}/", name="user_view_backend")
      * @ParamConverter("user", class="App\Entity\User")
      *
      * @return Response

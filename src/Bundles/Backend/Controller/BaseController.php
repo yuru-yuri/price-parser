@@ -8,10 +8,10 @@ use Symfony\Component\HttpFoundation\Response;
 abstract class BaseController extends Controller
 {
 
-    public function render(string $view, array $parameters = array(), Response $response = null): Response
+    protected function render(string $view, array $parameters = array(), Response $response = null): Response
     {
         return parent::render($view, $parameters + [
-                'i' => $this->getUser(),
+                'profile' => $this->getUser(),
             ], $response);
     }
 

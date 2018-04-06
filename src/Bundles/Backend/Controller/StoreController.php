@@ -38,14 +38,14 @@ class StoreController extends BaseController
     }
 
     /**
+     * @Route("/{title}-{id}", name="store_edit_backend")
+     * @ParamConverter("store", class="App\Entity\Store")
+     *
      * @param Request $request
      * @param Store $store
      * @param array $data
      *
      * @return Response
-     *
-     * @Route("/{title}-{id}", name="store_edit_backend")
-     * @ParamConverter("store", class="App\Entity\Store")
      */
     public function edit(Request $request, Store $store, array $data = []): Response
     {
@@ -67,9 +67,9 @@ class StoreController extends BaseController
     }
 
     /**
-     * @param $request Request
-     *
      * @return Response
+     *
+     * @param $request Request
      *
      * @Route("/new", name="store_create_backend")
      */

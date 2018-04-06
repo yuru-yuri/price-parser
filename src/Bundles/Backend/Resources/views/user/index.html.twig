@@ -6,8 +6,8 @@
         {% for user in users %}
         <li>
             <a href="{{ path('user_edit_backend',
-                {id: user.id, login: user.login})
-            }}">{{ user.login|capitalize }}</a>
+                {id: profile.id, login: profile.login})
+            }}">{{ profile.login|capitalize }}</a>
         </li>
         {% endfor %}
     </ul>
