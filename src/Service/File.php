@@ -2,24 +2,11 @@
 
 namespace App\Service;
 
-use Intervention\Image\Constraint;
-use Intervention\Image\ImageManager;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class File
 {
     protected const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_';
-    private $targetDir;
-    private $driver;
-    private $manager;
-    private $imagesWebRoot;
-
-    public function __construct(array $params, ImageManager $manager)
-    {
-        $this->targetDir = $params['targetDir'];
-        $this->driver = $params['driver'];
-        $this->imagesWebRoot = $params['imagesWebRoot'];
-        $this->manager = $manager;
-    }
 
     public function generateName(int $len = 8): string
     {
@@ -44,56 +31,23 @@ class File
         ]);
     }
 
-    /**
-     * @param string $path
-     * @param array $options
-     *
-     * @return string
-     */
-    public function imageResize(string $path, array $options): ?string
+    public function uploadFile(string $rootPath, UploadedFile $file)
     {
-        if(!\is_file($path))
+        $extension = $file->guessExtension();
+
+        do
         {
-            throw new \RuntimeException($path . ' is not file!');
+            $fileName = $this->generateName() . '.' . $extension;
         }
+        while (\is_file($rootPath . '/' . $fileName));
 
-        $pathInfo = \pathinfo($path);
+        $fullName = $fileName;
 
-        $directory = $pathInfo['dirname'];
-        $filename = $pathInfo['filename'];
-        $extension = $pathInfo['extension'];
+        $rootPath .= '/' . \dirname($fileName);
+        $fileName = \basename($fileName);
 
-        $tmbPath = \sprintf('%s/%s-%sx%s.%s',
-            $directory,
-            $filename,
-            $options['width'],
-            $options['height'],
-            $extension
-        );
+        $file->move($rootPath, $fileName);
 
-        if(\is_file($tmbPath))
-        {
-            return $tmbPath;
-        }
-
-        $image = $manager->make($path);
-
-        if('resizeAspect' === $options['type'])
-        {
-            $image->resize($options['width'], $options['height'], function ($constraint) {
-                /**
-                 * @var $constraint Constraint
-                 */
-                $constraint->aspectRatio();
-            });
-        }
-        else
-        {
-            $image->{$options['type']}($options['width'], $options['height']);
-        }
-
-        $image->save($tmbPath);
-
-        return $tmbPath;
+        return $fullName;
     }
 }

@@ -14,6 +14,11 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class UserRepository extends ServiceEntityRepository
 {
+//    /**
+//     * @var \Symfony\Component\DependencyInjection\ContainerInterface
+//     */
+//    private $container;
+
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, User::class);
@@ -47,4 +52,13 @@ class UserRepository extends ServiceEntityRepository
         ;
     }
     */
+
+//    /**
+//     * @param $container
+//     */
+//    public function setContainer($container)
+//    {
+//        $this->container = $container;
+//    }
+
 }

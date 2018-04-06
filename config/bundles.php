@@ -16,4 +16,5 @@ return [
     Symfony\Bundle\WebServerBundle\WebServerBundle::class => ['dev' => true],
     App\Bundles\Frontend\AppFrontendBundle::class => ['all' => true],
     App\Bundles\Backend\AppBackendBundle::class => ['all' => true],
+    Liip\ImagineBundle\LiipImagineBundle::class => ['all' => true],
 ];

@@ -7,6 +7,7 @@ use App\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -59,12 +60,26 @@ class UserController extends BaseController
             ])
             ->add('avatar', FileType::class, [
                 'label' => 'Avatar',
+                'required' => false,
+                'data_class' => null,
             ])
         ;
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
         {
+            /** @var $avatar UploadedFile */
+            $avatar = $user->getAvatar();
+            if ($avatar)
+            {
+                $uploadService = $this->get('file.upload.service');
+                $directory = $this->getParameter('images_directory');
+
+                $fullName = $uploadService->uploadFile($directory, $avatar);
+
+                $user->setAvatar($fullName);
+            }
+
             $em->persist($user);
             $em->flush();
         }

@@ -2,11 +2,8 @@
 
 namespace App\Entity;
 
-use App\Service\File;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Intervention\Image\ImageManager;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -290,12 +287,6 @@ class User implements \Serializable, UserInterface
         $this->avatar = $avatar;
 
         return $this;
-    }
-
-    public function resize(string $path, ImageManager $im, array $params)
-    {
-        $file = new File();
-        return $file->imageResize($path, $im, $params);
     }
 
 }

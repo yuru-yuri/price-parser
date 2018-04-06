@@ -8,6 +8,9 @@
         {{ form_start(form, {attr: {class: "checkboxes-form"}}) }}
         {{ form_widget(form) }}
         <hr class="hr"/>
+        <div><strong>Current image</strong></div>
+        <img src="{{ user.getAvatar() | imagine_filter('small') }}">
+        <hr class="hr"/>
         <div class="form-group btn-group">
             <a class="btn btn-default" href="{{ path('users_backend') }}">Back</a>
             <button type="submit" class="btn btn-success">Save</button>

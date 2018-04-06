@@ -24,8 +24,16 @@ class UserType extends AbstractType
                     'class' => 'form-control',
                 ],
             ])
-            ->add('name', TextType::class)
-            ->add('last_name', TextType::class)
+            ->add('name', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+            ])
+            ->add('last_name', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+            ])
         ;
     }
 

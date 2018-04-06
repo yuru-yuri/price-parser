@@ -39,6 +39,8 @@ class ProfileController extends BaseController
          */
         $user = $this->getUser();
 
+//        $oldAvatar = $user->getAvatar();
+
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(UserType::class, $user);
         $form
@@ -59,25 +61,22 @@ class ProfileController extends BaseController
             {
                 $uploadService = $this->get('file.upload.service');
                 $directory = $this->getParameter('images_directory');
-                $extension = $avatar->guessExtension();
 
-                do
-                {
-                    $fileName = $uploadService->generateName() . '.' . $extension;
-                }
-                while (\is_file($directory . '/' . $fileName));
+                $fullName = $uploadService->uploadFile($directory, $avatar);
 
-                $fullName = $fileName;
-
-                $directory .= '.' . \dirname($fileName);
-                $fileName = \basename($fileName);
-
-                $avatar->move($directory, $fileName);
                 $user->setAvatar($fullName);
             }
 
             $em->persist($user);
             $em->flush();
+
+            /*if($avatar)
+            {
+                try
+                {
+                    \unlink($directory . '/' . $oldAvatar);
+                } catch (\Throwable $e) {}
+            }*/
         }
 
         return $this->render('@AppFrontend/profile/edit.html.twig', [
