@@ -7,6 +7,7 @@ use App\Form\UserType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -17,8 +18,13 @@ class DefaultController extends BaseController
     /**
      * @Route("/", name="index", methods="get")
      */
-    public function index()
+    public function index(Request $request): Response
     {
+        if (strpos($request->getRequestUri(), '/index.php') === 0)
+        {
+            return $this->redirect('/');
+        }
+
         return $this->render('@AppFrontend/default/index.html.twig');
     }
 

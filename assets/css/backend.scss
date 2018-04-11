@@ -18,3 +18,25 @@ body {
   padding-left: 10px;
   line-height: 20px;
 }
+
+.pagination {
+  text-align: center;
+  width: 100%;
+  & > a,
+  & > span {
+    display: inline-block;
+    padding: 6px;
+    border: 1px solid #000;
+    border-radius: 3px;
+    box-shadow: 0 0 1px #000;
+    margin: auto 3px;
+    color: #000;
+    &.disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+    &.active {
+      font-weight: bold;
+    }
+  }
+}

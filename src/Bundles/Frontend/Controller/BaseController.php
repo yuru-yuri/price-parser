@@ -2,7 +2,6 @@
 
 namespace App\Bundles\Frontend\Controller;
 
-use Intervention\Image\ImageManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 

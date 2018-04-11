@@ -39,7 +39,7 @@ class ProfileController extends BaseController
          */
         $user = $this->getUser();
 
-//        $oldAvatar = $user->getAvatar();
+        $oldAvatar = $user->getAvatar();
 
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(UserType::class, $user);
@@ -67,13 +67,11 @@ class ProfileController extends BaseController
             $em->persist($user);
             $em->flush();
 
-            /*if($avatar)
+            if($avatar !== $oldAvatar)
             {
-                try
-                {
-                    \unlink($directory . '/' . $oldAvatar);
-                } catch (\Throwable $e) {}
-            }*/
+                $filename = $this->container->getParameter('images_directory') . '/' . $oldAvatar;
+                is_file($filename) && \unlink($filename);
+            }
         }
 
         return $this->render('@AppFrontend/profile/edit.html.twig', [

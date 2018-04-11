@@ -28,13 +28,13 @@ class ProductController extends BaseController
     public function index(Request $request, ?int $page = null): Response
     {
         $maxProducts = 6;
-        $page = $page ?? 0;
+        $page = $page ?? 1;
 
         $em = $this->getDoctrine()->getManager();
         $criteria = Criteria::create();
-        $criteria->setFirstResult($maxProducts * $page)
+        $criteria->setFirstResult($maxProducts * ($page - 1))
             ->setMaxResults($maxProducts);
-        $totalPages = 10;
+        $totalPages = $products = $em->getRepository(Product::class)->count([]);
 
         $products = $em->getRepository(Product::class)
             ->matching($criteria);
@@ -43,7 +43,7 @@ class ProductController extends BaseController
             'h1' => 'Products index',
             'products' => $products,
             'page' => $page,
-            'totalPages' => $totalPages,
+            'totalPages' => \ceil($totalPages / $maxProducts),
         ]);
     }
 
