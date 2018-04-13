@@ -52,7 +52,7 @@ class UserController extends BaseController
                 'choices' => [
                     'Creator' => 'ROLE_CREATOR',
                     'Moderator' => 'ROLE_MODERATOR',
-                    'Admin' => 'ROLE_ADMIN'
+                    'Admin' => 'ROLE_ADMIN',
                 ],
                 'attr' => [
                     'class' => 'form-control',
