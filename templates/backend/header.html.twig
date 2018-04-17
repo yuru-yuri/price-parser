@@ -35,6 +35,9 @@
                         </li>
                         <!-- Menu Footer-->
                         <li class="user-footer">
+                            <div class="pull-left">
+                                <a class="btn btn-default btn-flat" href="{{ path('user_view_backend', {id: profile.id, login: profile.getUsername()} ) }}">Profile</a>
+                            </div>
                             <div class="pull-right">
                                 <a href="{{ path('logout') }}" class="btn btn-default btn-flat">Sign out</a>
                             </div>
