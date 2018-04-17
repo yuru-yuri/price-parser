@@ -43,6 +43,7 @@ class UserController extends BaseController
      */
     public function edit(Request $request, User $user): Response
     {
+        $oldAvatar = $user->getAvatar();
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(UserType::class, $user);
         $form
@@ -75,6 +76,10 @@ class UserController extends BaseController
                 $uploadService = $this->get('file.upload.service');
                 $fullName = $uploadService->uploadFile($avatar);
                 $user->setAvatar($fullName);
+            }
+            else
+            {
+                $user->setAvatar($oldAvatar);
             }
 
             $em->persist($user);
