@@ -17,7 +17,9 @@
                                 </div>
                                 {{ form_end(form) }}
                             </div>
-                            {#<img src="{{ user.getAvatar() | imagine_filter('avatar') }}" class="user-image" alt="User Image">#}
+                            {% if user.getAvatar() %}
+                            <img src="{{ user.getAvatar() | imagine_filter('avatar') }}" class="user-image" alt="User Image">
+                            {% endif %}
                         </div>
                     </div>
                 </div>

@@ -59,7 +59,7 @@ class UserController extends BaseController
                     'class' => 'form-control',
                 ],
             ])
-            ->add('avatar', FileType::class, [
+            ->add('virtualAvatar', FileType::class, [
                 'label' => 'Avatar',
                 'required' => false,
                 'data_class' => null,
@@ -70,8 +70,8 @@ class UserController extends BaseController
         if ($form->isSubmitted() && $form->isValid())
         {
             /** @var $avatar UploadedFile */
-            $avatar = $user->getAvatar();
-            if ($avatar)
+            $avatar = $user->getVirtualAvatar();
+            if (!$form->get('virtualAvatar')->getErrors()->count() && $avatar)
             {
                 $uploadService = $this->get('file.upload.service');
                 $fullName = $uploadService->uploadFile($avatar);

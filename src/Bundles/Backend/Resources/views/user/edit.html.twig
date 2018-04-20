@@ -9,14 +9,15 @@
             {{ form_start(form, {attr: {class: "checkboxes-form"}}) }}
             {{ form_widget(form) }}
             <hr class="hr"/>
+            {% if user.getAvatar() %}
             <div><strong>Current image</strong></div>
-            <img src="{{ profile.getAvatar() | imagine_filter('avatar') }}">
+            <img src="{{ user.getAvatar() | imagine_filter('avatar') }}">
+            {% endif %}
             <hr class="hr"/>
             <div class="form-group btn-group">
                 <a class="btn btn-default" href="{{ path('users_backend') }}">Back</a>
                 <button type="submit" class="btn btn-success">Save</button>
             </div>
-            {{ form_end(form) }}
         </div>
     </div>
 

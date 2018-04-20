@@ -82,10 +82,13 @@ class User implements \Serializable, UserInterface
 
     /**
      * @ORM\Column(type="string", nullable=true)
-     *
-     * @Assert\File(mimeTypes={ "image/jpeg", "image/png" }, maxSize="1M")
      */
     private $avatar;
+
+    /**
+     * @Assert\File(mimeTypes={ "image/jpeg", "image/png" }, maxSize="1M")
+     */
+    private $virtualAvatar;
 
     public function __construct()
     {
@@ -285,6 +288,18 @@ class User implements \Serializable, UserInterface
     public function setAvatar($avatar): self
     {
         $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    public function getVirtualAvatar()
+    {
+        return $this->virtualAvatar;
+    }
+
+    public function setVirtualAvatar($avatar)
+    {
+        $this->virtualAvatar = $avatar;
 
         return $this;
     }

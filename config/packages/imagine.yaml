@@ -32,6 +32,28 @@ liip_imagine:
                     mode:          outbound
                     allow_upscale: true
 
+        big:
+            jpeg_quality:          85
+            png_compression_level: 8
+            filters:
+                auto_rotate: ~
+                strip: ~
+                thumbnail:
+                    size:          [1200, 1200]
+                    mode:          outbound
+                    allow_upscale: true
+
+        medium:
+            jpeg_quality:          85
+            png_compression_level: 8
+            filters:
+                auto_rotate: ~
+                strip: ~
+                thumbnail:
+                    size:          [720, 720]
+                    mode:          outbound
+                    allow_upscale: true
+
         avatar:
             jpeg_quality:          85
             png_compression_level: 8

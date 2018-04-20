@@ -10,3 +10,6 @@ appBackend:
 logout:
    path: /logout
 
+default_avatar:
+  path: /assets/default_avatar.jpg
+
