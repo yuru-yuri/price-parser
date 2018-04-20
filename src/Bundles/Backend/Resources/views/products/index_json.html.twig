@@ -1,0 +1,40 @@
+
+{% for product in products %}
+    <tr>
+        <td>
+        <a class="btn btn-default" href="{{ path('product_edit_backend',
+            {id: product.id, title: product.title}
+        ) }}">{{ product.id }}</a>
+        </td>
+        <td>
+            {{ product.title }}
+        </td>
+        <td>
+            <div class="on-off">
+                <input id="product-active-{{ product.id }}" type="checkbox"
+                       class="active-trigger"
+                       data-url="{{ path('product_active_change_backend',
+                           { id: product.id, title: product.title }) }}"
+                       {% if product.active %}checked=""{% endif %}>
+                <label for="product-active-{{ product.id }}"></label>
+            </div>
+        </td>
+        <td>
+            {#<a href="./?filter=category:{{ product.category.id }};">#}
+            {{ product.category.title }}
+            {#</a>#}
+        </td>
+        <td>
+            <div class="btn-group">
+                <a class="btn btn-warning" href="{{ path('product_edit_backend',
+                    {id: product.id, title: product.title} ) }}">
+                    <i class="fa fa-edit"></i>
+                </a>
+                <a class="btn btn-danger" href="{{ path('product_delete_backend',
+                    {id: product.id, title: product.title} ) }}">
+                    <i class="fa fa-trash"></i>
+                </a>
+            </div>
+        </td>
+    </tr>
+{% endfor %}

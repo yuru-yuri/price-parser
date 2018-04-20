@@ -41,4 +41,11 @@ $(function () {
             window.console.log($(this), 'The element has been unchecked');
         }
     });
+
+    $('body').on('click', 'a.warning', function (e) {
+        if(!confirm($(e).attr('msg')))
+        {
+            e.preventDefault();
+        }
+    });
 });

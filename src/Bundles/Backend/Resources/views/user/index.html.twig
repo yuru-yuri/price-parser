@@ -2,13 +2,48 @@
 
 {% block title %}Users{% endblock %}
 {% block body %}
-    <ul>
-        {% for user in users %}
-        <li>
-            <a href="{{ path('user_edit_backend',
-                {id: profile.id, login: profile.login})
-            }}">{{ profile.login|capitalize }}</a>
-        </li>
-        {% endfor %}
-    </ul>
+    <div class="box box-default">
+        <div class="box-body">
+            <div class="table-responsive">
+                <table class="table no-margins">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Login</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td>
+                                <a class="btn btn-default" href="{{ path('user_edit_backend',
+                                    {id: user.id, login: user.login})
+                                }}">{{ user.id }}</a>
+                            </td>
+                            <td>
+                                {{ user.login|capitalize }}
+                            </td>
+                            <td>
+                                <a href="mailto:{{ user.email }}">{{ user.email }}</a>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a class="btn btn-warning" href="{{ path('user_edit_backend',
+                                        {id: user.id, login: user.login})
+                                    }}"><i class="fa fa-edit"></i></a>
+                                    <a class="btn btn-danger warning"
+                                       msg="Delete! Are you sure?"
+                                       href="{{ path('user_delete_backend',
+                                        {id: user.id, login: user.login})
+                                    }}"><i class="fa fa-trash"></i></a>
+                                </div>
+                            </td>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 {% endblock %}

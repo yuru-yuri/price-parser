@@ -39,7 +39,13 @@ class ProductController extends BaseController
         $products = $em->getRepository(Product::class)
             ->matching($criteria);
 
-        return $this->render('@AppBackend/products/index.html.twig', [
+        $template = '@AppBackend/products/index.html.twig';
+        if($request->isXmlHttpRequest())
+        {
+            $template = '@AppBackend/products/index_json.html.twig';
+        }
+
+        return $this->render($template, [
             'h1' => 'Products index',
             'products' => $products,
             'page' => $page,
@@ -48,7 +54,7 @@ class ProductController extends BaseController
     }
 
     /**
-     * @Route("/{title}-{id}", name="product_edit_backend")
+     * @Route("/{title}-{id}/", name="product_edit_backend", methods={"GET","POST","PUT"})
      * @ParamConverter("product", class="App\Entity\Product")
      *
      * @param $request Request
@@ -72,6 +78,43 @@ class ProductController extends BaseController
             'h1' => 'Edit product',
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/{title}-{id}", methods={"post"}, name="product_active_change_backend", methods={"OPTIONS"})
+     *
+     * @param Request $request
+     * @param Product $product
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function changeActive(Request $request, Product $product)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $active = !$product->getActive();
+        $product->setActive($active);
+        $em->persist($product);
+        $em->flush();
+
+        return $this->json([]);
+    }
+
+    /**
+     * @Route("/{title}-{id}/", name="product_delete_backend", methods={"DELETE"})
+     *
+     * @param Request $request
+     * @param Product $product
+     *
+     * @return Response
+     */
+    public function delete(Request $request, Product $product)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($product);
+        $em->flush();
+
+        $referer = $request->headers->get('referer');
+        return $this->redirect($referer);
     }
 
 }

@@ -15,6 +15,7 @@ security:
                 login_path: login
                 check_path: login
                 default_target_path: index
+                use_referer: true
             provider: our_db_provider
 
             logout:
@@ -33,6 +34,7 @@ security:
                 login_path: login
                 check_path: login
                 default_target_path: index
+                use_referer: true
             provider: our_db_provider
 
             logout:
@@ -52,6 +54,7 @@ security:
                 login_path: login
                 check_path: login
                 default_target_path: index
+                use_referer: true
             provider: our_db_provider
 
             logout:

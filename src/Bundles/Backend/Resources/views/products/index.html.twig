@@ -2,21 +2,32 @@
 
 {% block title %}Products index{% endblock %}
 {% block body %}
-    <ul class="row">
-        {% for product in products %}
-            <li>
-                <a href="{{ path('product_edit_backend',
-                    {id: product.id, title: product.title}
-                ) }}">{{ product.title }}</a>
-            </li>
-        {% endfor %}
-    </ul>
-    <hr/>
-    {% include 'widget/paginate.html.twig' with {
-        currentFilters: { },
-        currentPage: page,
-        paginationPath: 'products_backend.paginate',
-        lastPage: totalPages,
-        showAlwaysFirstAndLast: true
-    } only %}
+    <div class="box box-default">
+        <div class="box-body">
+            <div class="table-responsive">
+                <table class="table no-margins">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Title</th>
+                        <th>Active</th>
+                        <th>Category</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{ include('@AppBackend/products/index_json.html.twig') }}
+                    </tbody>
+                </table>
+            </div>
+            <hr/>
+            {% include 'widget/paginate.html.twig' with {
+                currentFilters: { },
+                currentPage: page,
+                paginationPath: 'products_backend.paginate',
+                lastPage: totalPages,
+                showAlwaysFirstAndLast: true
+            } only %}
+        </div>
+    </div>
 {% endblock %}

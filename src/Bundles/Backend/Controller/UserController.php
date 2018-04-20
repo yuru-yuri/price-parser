@@ -4,6 +4,7 @@ namespace App\Bundles\Backend\Controller;
 
 use App\Form\UserType;
 use App\Entity\User;
+use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -19,7 +20,7 @@ class UserController extends BaseController
 {
 
     /**
-     * @Route("/", name="users_backend", methods="get")
+     * @Route("/", name="users_backend", methods="GET")
      */
     public function index(): Response
     {
@@ -36,14 +37,13 @@ class UserController extends BaseController
      * @param Request $request
      * @param User $user
      *
-     * @Route("/{login}-{id}/edit", name="user_edit_backend")
+     * @Route("/{login}-{id}/edit", name="user_edit_backend", methods={"GET","POST","PUT","OPTIONS"})
      * @ParamConverter("user", class="App\Entity\User")
      *
      * @return Response
      */
     public function edit(Request $request, User $user): Response
     {
-        $oldAvatar = $user->getAvatar();
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(UserType::class, $user);
         $form
@@ -77,10 +77,6 @@ class UserController extends BaseController
                 $fullName = $uploadService->uploadFile($avatar);
                 $user->setAvatar($fullName);
             }
-            else
-            {
-                $user->setAvatar($oldAvatar);
-            }
 
             $em->persist($user);
             $em->flush();
@@ -97,7 +93,7 @@ class UserController extends BaseController
      * @param Request $request
      * @param User $user
      *
-     * @Route("/{login}-{id}/", name="user_view_backend")
+     * @Route("/{login}-{id}/", name="user_view_backend", methods="GET")
      * @ParamConverter("user", class="App\Entity\User")
      *
      * @return Response
@@ -108,6 +104,25 @@ class UserController extends BaseController
             'user' => $user,
             'h1' => 'View user',
         ]);
+    }
+
+    /**
+     * @Route("/{login}-{id}/", name="user_delete_backend", methods="DELETE")
+     * @ParamConverter("user", class="App\Entity\User")
+     *
+     * @param Request $request
+     * @param $user
+     *
+     * @return Response
+     */
+    public function delete(Request $request, User $user): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($user);
+        $em->flush();
+
+        $referer = $request->headers->get('referer');
+        return $this->redirect($referer);
     }
 
 }
